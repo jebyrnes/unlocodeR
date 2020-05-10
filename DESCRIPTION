@@ -1,6 +1,6 @@
 Package: unlocodeR
 Title: The UN/LOCODE Code for Trade and Transport Locations
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R: 
     person(given = "Jarrett",
            family = "Byrnes",
@@ -8,7 +8,7 @@ Authors@R:
            email = "jarrett.byrnes@umb.edu",
            comment = c(ORCID = "0000-0002-9791-9472"))
 Description: Provides access to the UN/LOCODE Code for Trade and Transport Locations found 
-              at <http://www.unece.org/cefact/codesfortrade/codes_index.html>
+              at <http://www.unece.org/cefact/codesfortrade/codes_index.html>.
 License: GPL-3
 Suggests: 
     testthat

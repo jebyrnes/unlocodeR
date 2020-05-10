@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 [![CRAN status](https://www.r-pkg.org/badges/version/unlocodeR)](https://CRAN.R-project.org/package=unlocodeR)
 <!-- badges: end -->
 
-The goal of unlocodeR is to provide access for the UN Code for Trade and Transport Locations for geospatial standardization as well as associated tables.
+The goal of unlocodeR is to provide access for the UN Code for Trade and Transport Locations for geospatial standardization as well as associated tables for translating codes. This is an excellent classification that gets at lower level geographic entities that states or provinces - such as cities, railroad stations, airports, and more. See http://www.unece.org/cefact/codesfortrade/codes_index.html/ for much more detail about the standard, as well as the docs here.
 
 ## Installation
 <!--

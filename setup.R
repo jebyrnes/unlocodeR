@@ -11,3 +11,5 @@ use_readme_rmd()
 
 use_git("First commit")
 use_github()
+
+use_test("degrees_numeric")

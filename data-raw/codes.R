@@ -28,7 +28,7 @@ eclac_code <- data.frame(
 
 status_code <- data.frame(
   stringsAsFactors = FALSE,
-  st_code = c(
+  status_code = c(
     "AA",
     "AC", "AF", "AI", "AM", "AS", "AQ", "RL", "RN",
     "RQ", "RR", "QQ", "UR", "XX"
