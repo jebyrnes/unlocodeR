@@ -7,3 +7,7 @@ use_data_raw(name = "unlocode")
 use_data_raw(name = "codes")
 
 use_r("data")
+use_readme_rmd()
+
+use_git("First commit")
+use_github()
