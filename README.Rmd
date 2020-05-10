@@ -1,0 +1,44 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# unlocodeR
+
+<!-- badges: start -->
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![CRAN status](https://www.r-pkg.org/badges/version/unlocodeR)](https://CRAN.R-project.org/package=unlocodeR)
+<!-- badges: end -->
+
+The goal of unlocodeR is to provide access for the UN Code for Trade and Transport Locations for geospatial standardization as well as associated tables.
+
+## Installation
+<!--
+You can install the released version of unlocodeR from [CRAN](https://CRAN.R-project.org) with:
+
+``` r
+install.packages("unlocodeR")
+```
+-->
+
+``` r
+remotes::install_github("jebyrnes/unlocodeR")
+```
+
+## Example
+
+```{r example}
+library(unlocodeR)
+
+head(unlocode)
+```
