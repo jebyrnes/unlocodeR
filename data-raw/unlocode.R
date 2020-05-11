@@ -68,18 +68,23 @@ read_locode <- function(a_file) {
   adf <- adf %>%
     tidyr::separate(location, c("latitude", "longitude", sep = " ")) %>%
     mutate(
+
+      #lats
       latitude = stringr::str_replace(latitude, "(.*)(\\d\\d)([A-Z])$", "\\1 \\2 \\3"),
-      longitude = stringr::str_replace(longitude, "(.*)(\\d\\d)([A-Z])$", "\\1 \\2 \\3"),
       latitude_dec = stringr::str_replace(latitude, "^(.*) S", "\\-\\1 00"),
       latitude_dec = stringr::str_replace(latitude_dec, " N", " 00"),
+      latitude_dec = conv_unit(latitude_dec, "deg_min_sec", "dec_deg") %>% as.numeric %>% round(4),
+
+      #longs
+      longitude = stringr::str_replace(longitude, "(.*)(\\d\\d)([A-Z])$", "\\1 \\2 \\3"),
+      longitude = ifelse(longitude=="05045", "050 45 E", longitude), #Fix Salwa, Saudi Arabia
       longitude_dec = stringr::str_replace(longitude, "^(.*) W", "\\-\\1 00"),
       longitude_dec = stringr::str_replace(longitude_dec, " E", " 00"),
-      longitude_dec = conv_unit(longitude_dec, "deg_min_sec", "dec_deg") %>% as.numeric() %>% round(4),
-      latitude_dec = conv_unit(latitude_dec, "deg_min_sec", "dec_deg") %>% as.numeric() %>% round(4)
-    )
+      longitude_dec = conv_unit(longitude_dec, "deg_min_sec", "dec_deg")%>% as.numeric %>% round(4)
+      )
 
   # return
-  adf %>% select(-` `)
+  adf
 }
 
 # get the codes
