@@ -71,6 +71,7 @@ read_locode <- function(a_file) {
 
       #lats
       latitude = stringr::str_replace(latitude, "(.*)(\\d\\d)([A-Z])$", "\\1 \\2 \\3"),
+      latitude = stringr::str_replace(latitude, "^431 20", "43 12"), #fix Jerseyville, Canada
       latitude_dec = stringr::str_replace(latitude, "^(.*) S", "\\-\\1 00"),
       latitude_dec = stringr::str_replace(latitude_dec, " N", " 00"),
       latitude_dec = conv_unit(latitude_dec, "deg_min_sec", "dec_deg") %>% as.numeric %>% round(4),
@@ -78,6 +79,14 @@ read_locode <- function(a_file) {
       #longs
       longitude = stringr::str_replace(longitude, "(.*)(\\d\\d)([A-Z])$", "\\1 \\2 \\3"),
       longitude = ifelse(longitude=="05045", "050 45 E", longitude), #Fix Salwa, Saudi Arabia
+      longitude = stringr::str_replace(longitude, "^0642 50 W", "064 25"), #fix Blockhouse, Canada
+      longitude = stringr::str_replace(longitude, "^751 62 W", "75 16"), #fix Chadwicks, NY
+      longitude = stringr::str_replace(longitude, "^381 50", "38 15"), #fix Mironovka, UA
+      longitude = stringr::str_replace(longitude, "^305 90 E", "30 59 E"), #fix Myronivka, subdv2
+      longitude = stringr::str_replace(longitude, "^342 40 E", "34 24 E"), #fix Nikopol, UA
+      longitude = stringr::str_replace(longitude, "^355 20 E", "35 52 E"), #fix Nova Vodolaha, UA
+      longitude = stringr::str_replace(longitude, "^312 19 E", "31 2 E"), #fix Umhlali, ZA
+
       longitude_dec = stringr::str_replace(longitude, "^(.*) W", "\\-\\1 00"),
       longitude_dec = stringr::str_replace(longitude_dec, " E", " 00"),
       longitude_dec = conv_unit(longitude_dec, "deg_min_sec", "dec_deg")%>% as.numeric %>% round(4)
