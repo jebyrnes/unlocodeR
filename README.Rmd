@@ -48,7 +48,7 @@ head(unlocode)
 
 While some of the lat/longs are NA and some might be a hair off due to manual correction of bad entries, spatial coverage is fairly good.
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 library(unlocodeR)
 library(sf)
 library(dplyr)
@@ -69,7 +69,7 @@ ggplot() +
 
 Here it is for the US, for example
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 uslocode <- unlocode %>%
   filter(iso_3166_2_country=="US")
 

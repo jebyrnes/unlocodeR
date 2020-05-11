@@ -85,9 +85,9 @@ install.packages("unlocodeR")
 -->
 <div class="sourceCode" id="cb1"><pre class="r"><span class="kw pkg">remotes</span><span class="kw ns">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span>(<span class="st">"jebyrnes/unlocodeR"</span>)</pre></div>
 </div>
-<div id="example" class="section level2">
+<div id="the-data" class="section level2">
 <h2 class="hasAnchor">
-<a href="#example" class="anchor"></a>Example</h2>
+<a href="#the-data" class="anchor"></a>The Data</h2>
 <div class="sourceCode" id="cb2"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">unlocodeR</span>)
 
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">unlocode</span>)
@@ -98,13 +98,52 @@ install.packages("unlocodeR")
 <span class="co">#&gt; 4    AD ESC Escaldes-Engordany Escaldes-Engordany                 AD</span>
 <span class="co">#&gt; 5    AD EAC           Esc\xe0s              Escas                 AD</span>
 <span class="co">#&gt; 6    AD FMO  La Farga de Moles  La Farga de Moles                 AD</span>
-<span class="co">#&gt;   subdivision iata_code function_code status_code date latitude longitude</span>
-<span class="co">#&gt; 1        &lt;NA&gt;      &lt;NA&gt;      --34-6--          AI 0601  42 30 N  001 31 E</span>
-<span class="co">#&gt; 2        &lt;NA&gt;      &lt;NA&gt;      --3-----          RL 0307  42 34 N  001 35 E</span>
-<span class="co">#&gt; 3        &lt;NA&gt;      &lt;NA&gt;      --3-----          RL 0307  42 32 N  001 34 E</span>
-<span class="co">#&gt; 4        &lt;NA&gt;      &lt;NA&gt;      --3-----          RL 0307  42 31 N  001 33 E</span>
-<span class="co">#&gt; 5          04      &lt;NA&gt;      --3-----          RL 1407  42 33 N  001 31 E</span>
-<span class="co">#&gt; 6        &lt;NA&gt;      &lt;NA&gt;      --3----B          RQ 0307     &lt;NA&gt;      &lt;NA&gt;</span></pre></div>
+<span class="co">#&gt;   subdivision iata_code function_code status_code date latitude longitude     </span>
+<span class="co">#&gt; 1        &lt;NA&gt;      &lt;NA&gt;      --34-6--          AI 0601  42 30 N  001 31 E &lt;NA&gt;</span>
+<span class="co">#&gt; 2        &lt;NA&gt;      &lt;NA&gt;      --3-----          RL 0307  42 34 N  001 35 E &lt;NA&gt;</span>
+<span class="co">#&gt; 3        &lt;NA&gt;      &lt;NA&gt;      --3-----          RL 0307  42 32 N  001 34 E &lt;NA&gt;</span>
+<span class="co">#&gt; 4        &lt;NA&gt;      &lt;NA&gt;      --3-----          RL 0307  42 31 N  001 33 E &lt;NA&gt;</span>
+<span class="co">#&gt; 5          04      &lt;NA&gt;      --3-----          RL 1407  42 33 N  001 31 E &lt;NA&gt;</span>
+<span class="co">#&gt; 6        &lt;NA&gt;      &lt;NA&gt;      --3----B          RQ 0307     &lt;NA&gt;      &lt;NA&gt; &lt;NA&gt;</span>
+<span class="co">#&gt;   latitude_dec longitude_dec</span>
+<span class="co">#&gt; 1      42.5000        1.5167</span>
+<span class="co">#&gt; 2      42.5667        1.5833</span>
+<span class="co">#&gt; 3      42.5333        1.5667</span>
+<span class="co">#&gt; 4      42.5167        1.5500</span>
+<span class="co">#&gt; 5      42.5500        1.5167</span>
+<span class="co">#&gt; 6           NA            NA</span></pre></div>
+</div>
+<div id="coverage" class="section level2">
+<h2 class="hasAnchor">
+<a href="#coverage" class="anchor"></a>Coverage</h2>
+<p>While some of the lat/longs are NA and some might be a hair off due to manual correction of bad entries, spatial coverage is fairly good.</p>
+<div class="sourceCode" id="cb3"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">unlocodeR</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">sf</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">ggplot2</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">rnaturalearth</span>)
+
+<span class="no">unsf</span> <span class="kw">&lt;-</span> <span class="no">unlocode</span> <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(!<span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(<span class="no">latitude_dec</span>)) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">latitude_dec</span> <span class="kw">&lt;</span> <span class="fl">180</span>,
+         <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span>(<span class="no">longitude_dec</span>) <span class="kw">&lt;</span> <span class="fl">180</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/sf/man/st_as_sf.html">st_as_sf</a></span>(<span class="kw">coords</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"longitude_dec"</span>, <span class="st">"latitude_dec"</span>), <span class="kw">crs</span><span class="kw">=</span><span class="fl">4326</span>)
+
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>() +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/pkg/rnaturalearth/man/ne_countries.html">ne_countries</a></span>(<span class="kw">returnclass</span> <span class="kw">=</span> <span class="st">"sf"</span>)) +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">unsf</span>) +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_void</a></span>()</pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-2-1.png" width="100%"></p>
+<p>Here it is for the US, for example</p>
+<div class="sourceCode" id="cb4"><pre class="r"><span class="no">uslocode</span> <span class="kw">&lt;-</span> <span class="no">unlocode</span> <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">iso_3166_2_country</span><span class="kw">==</span><span class="st">"US"</span>)
+
+
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>() +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/pkg/rnaturalearth/man/ne_countries.html">ne_countries</a></span>(<span class="kw">returnclass</span> <span class="kw">=</span> <span class="st">"sf"</span>)) +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">uslocode</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">longitude_dec</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">latitude_dec</span>)) +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_void</a></span>()</pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-3-1.png" width="100%"></p>
 </div>
 </div>
   </div>

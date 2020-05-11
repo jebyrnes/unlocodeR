@@ -70,16 +70,7 @@ manual correction of bad entries, spatial coverage is fairly good.
 ``` r
 library(unlocodeR)
 library(sf)
-#> Linking to GEOS 3.7.2, GDAL 2.4.2, PROJ 5.2.0
 library(dplyr)
-#> 
-#> Attaching package: 'dplyr'
-#> The following objects are masked from 'package:stats':
-#> 
-#>     filter, lag
-#> The following objects are masked from 'package:base':
-#> 
-#>     intersect, setdiff, setequal, union
 library(ggplot2)
 library(rnaturalearth)
 
@@ -108,7 +99,6 @@ ggplot() +
   geom_sf(data = ne_countries(returnclass = "sf")) +
   geom_point(data = uslocode, aes(x = longitude_dec, y = latitude_dec)) +
   theme_void()
-#> Warning: Removed 6967 rows containing missing values (geom_point).
 ```
 
 <img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
