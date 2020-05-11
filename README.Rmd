@@ -35,10 +35,47 @@ install.packages("unlocodeR")
 remotes::install_github("jebyrnes/unlocodeR")
 ```
 
-## Example
+## The Data
 
 ```{r example}
 library(unlocodeR)
 
 head(unlocode)
+```
+
+
+## Coverage
+
+While some of the lat/longs are NA and some might be a hair off due to manual correction of bad entries, spatial coverage is fairly good.
+
+```{r}
+library(unlocodeR)
+library(sf)
+library(dplyr)
+library(ggplot2)
+library(rnaturalearth)
+
+unsf <- unlocode %>%
+  filter(!is.na(latitude_dec)) %>%
+  filter(latitude_dec < 180,
+         abs(longitude_dec) < 180) %>%
+  st_as_sf(coords = c("longitude_dec", "latitude_dec"), crs=4326)
+
+ggplot() +
+  geom_sf(data = ne_countries(returnclass = "sf")) +
+  geom_sf(data = unsf) +
+  theme_void()
+```
+
+Here it is for the US, for example
+
+```{r}
+uslocode <- unlocode %>%
+  filter(iso_3166_2_country=="US")
+
+
+ggplot() +
+  geom_sf(data = ne_countries(returnclass = "sf")) +
+  geom_point(data = uslocode, aes(x = longitude_dec, y = latitude_dec)) +
+  theme_void()
 ```
