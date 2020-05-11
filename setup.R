@@ -13,3 +13,4 @@ use_git("First commit")
 use_github()
 
 use_test("degrees_numeric")
+use_test("degrees_proper")
